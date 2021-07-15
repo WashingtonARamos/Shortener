@@ -29,7 +29,7 @@ namespace Shortener.Controllers
         {
             if (string.IsNullOrEmpty(l.OriginalUrl))
                 return BadRequest(new { Message = "Você deve informar um link a ser encurtado" });
-            if (!Uri.TryCreate(l.OriginalUrl, UriKind.Absolute, out _))
+            if (!Uri.TryCreate(l.OriginalUrl, UriKind.Absolute, out Uri uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
                 return BadRequest(new { Message = "O link informado é inválido" });
 
             l.Id = RandomString(5);
